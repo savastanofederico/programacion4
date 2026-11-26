@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   actualizarProductoApi,
   actualizarStockApi,
@@ -16,6 +16,7 @@ export function useProductos(filtros: ProductosFiltros) {
   return useQuery({
     queryKey: ['productos', filtros],
     queryFn: () => getProductosApi(filtros),
+    placeholderData: keepPreviousData,
   });
 }
 

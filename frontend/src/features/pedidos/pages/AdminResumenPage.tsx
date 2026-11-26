@@ -1,6 +1,7 @@
 import { handleApiError } from '../../../shared/api/handleApiError';
 import { EstadoError } from '../../../shared/components/EstadoError';
 import { Card } from '../../../shared/ui/Card';
+import { TarjetaResumen } from '../components/TarjetaResumen';
 import { useResumenPedidos } from '../hooks/usePedidos';
 
 export function AdminResumenPage() {
@@ -31,40 +32,40 @@ export function AdminResumenPage() {
     {
       titulo: 'Pendientes',
       valor: String(data.pendientes),
-      acento: 'border-l-4 border-l-amber-500',
-      texto: 'text-amber-700',
+      acento: 'border-l-amber-500',
+      colorTexto: 'text-amber-700',
     },
     {
       titulo: 'En preparación',
       valor: String(data.en_preparacion),
-      acento: 'border-l-4 border-l-blue-500',
-      texto: 'text-blue-700',
+      acento: 'border-l-blue-500',
+      colorTexto: 'text-blue-700',
     },
     {
       titulo: 'Entregados',
       valor: String(data.entregados),
-      acento: 'border-l-4 border-l-emerald-500',
-      texto: 'text-emerald-700',
+      acento: 'border-l-emerald-500',
+      colorTexto: 'text-emerald-700',
     },
     {
       titulo: 'Cancelados',
       valor: String(data.cancelados),
-      acento: 'border-l-4 border-l-red-500',
-      texto: 'text-red-700',
+      acento: 'border-l-red-500',
+      colorTexto: 'text-red-700',
     },
     {
       titulo: 'Pedidos de hoy',
       valor: String(data.pedidos_hoy),
-      acento: 'border-l-4 border-l-slate-700',
-      texto: 'text-slate-900',
+      acento: 'border-l-slate-700',
+      colorTexto: 'text-slate-900',
     },
     {
       titulo: 'Ingresos entregados',
       valor: `$ ${data.ingresos_entregados.toLocaleString('es-AR', {
         minimumFractionDigits: 2,
       })}`,
-      acento: 'border-l-4 border-l-emerald-600',
-      texto: 'text-emerald-700',
+      acento: 'border-l-emerald-600',
+      colorTexto: 'text-emerald-700',
     },
   ];
 
@@ -79,12 +80,7 @@ export function AdminResumenPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {tarjetas.map((t) => (
-          <Card key={t.titulo} className={`p-6 ${t.acento}`}>
-            <p className="text-xs font-bold uppercase tracking-wider text-slate-500">
-              {t.titulo}
-            </p>
-            <p className={`text-3xl font-extrabold mt-2 ${t.texto}`}>{t.valor}</p>
-          </Card>
+          <TarjetaResumen key={t.titulo} {...t} />
         ))}
       </div>
     </div>

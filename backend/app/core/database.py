@@ -6,10 +6,11 @@ engine = create_engine(settings.DATABASE_URL, echo=False, connect_args=connect_a
 
 
 def create_all_tables() -> None:
-    from app.modules.usuarios.models import Usuario  
-    from app.modules.categorias.models import Categoria  
-    from app.modules.productos.models import Producto  
-    from app.modules.pedidos.models import Pedido, DetallePedido  
+    # Los modelos se importan para que SQLModel registre las tablas antes de crearlas
+    from app.modules.usuarios.models import Usuario
+    from app.modules.categorias.models import Categoria
+    from app.modules.productos.models import Producto
+    from app.modules.pedidos.models import Pedido, DetallePedido
 
     SQLModel.metadata.create_all(engine)
 

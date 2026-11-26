@@ -12,8 +12,8 @@ class ProductoRepository(BaseRepository[Producto]):
     def get_active_by_id(self, producto_id: int) -> Producto | None:
         statement = (
             select(Producto)
-            .options(selectinload(Producto.categoria)) 
-            .where(Producto.id == producto_id, Producto.activo == True)  
+            .options(selectinload(Producto.categoria))
+            .where(Producto.id == producto_id, Producto.activo == True)
         )
         return self.session.exec(statement).first()
 
@@ -25,7 +25,7 @@ class ProductoRepository(BaseRepository[Producto]):
         categoria_id: int | None = None,
         disponible: bool | None = None,
     ) -> tuple[int, list[Producto]]:
-        base_filter = [Producto.activo == True]  
+        base_filter = [Producto.activo == True]
 
         if search is not None and search.strip():
             patron = f"%{search.strip()}%"
@@ -42,7 +42,7 @@ class ProductoRepository(BaseRepository[Producto]):
 
         items_stmt = (
             select(Producto)
-            .options(selectinload(Producto.categoria))  
+            .options(selectinload(Producto.categoria))
             .where(*base_filter)
             .order_by(Producto.id)
             .offset(skip)

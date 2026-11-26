@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
 from app.core.deps import get_current_active_user, require_role
 from app.modules.pedidos.schemas import (
     CambioEstado,
+    EstadoPedidoLiteral,
     PedidoCreate,
     PedidoRead,
     PedidosPaginados,
@@ -45,7 +46,7 @@ def crear_pedido(
 def listar_pedidos(
     skip: int = Query(0, ge=0),
     limit: int = Query(20, ge=1, le=100),
-    estado: str | None = Query(None),
+    estado: EstadoPedidoLiteral | None = Query(None),
     current_user: UserPublic = Depends(get_current_active_user),
     service: PedidoService = Depends(get_pedido_service),
 ):
@@ -54,7 +55,7 @@ def listar_pedidos(
 
 @router.get("/resumen", response_model=ResumenPedidos, status_code=status.HTTP_200_OK)
 def obtener_resumen(
-    _: UserPublic = Depends(require_role(("admin",))),
+    _: UserPublic = Depends(require_role(["admin"])),
     service: PedidoService = Depends(get_pedido_service),
 ):
     return service.obtener_resumen()
@@ -78,7 +79,7 @@ def obtener_pedido(
 def cambiar_estado_pedido(
     datos: CambioEstado,
     id: int = Path(ge=1),
-    _: UserPublic = Depends(require_role(("admin",))),
+    _: UserPublic = Depends(require_role(["admin"])),
     service: PedidoService = Depends(get_pedido_service),
 ):
     try:

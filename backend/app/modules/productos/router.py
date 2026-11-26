@@ -51,7 +51,7 @@ def obtener_producto(
 @router.post("", response_model=ProductoRead, status_code=status.HTTP_201_CREATED)
 def crear_producto(
     datos: ProductoCreate,
-    _: UserPublic = Depends(require_role(("admin",))),
+    _: UserPublic = Depends(require_role(["admin"])),
     service: ProductoService = Depends(get_producto_service),
 ):
     try:
@@ -64,7 +64,7 @@ def crear_producto(
 def actualizar_producto(
     datos: ProductoUpdate,
     id: int = Path(ge=1),
-    _: UserPublic = Depends(require_role(("admin",))),
+    _: UserPublic = Depends(require_role(["admin"])),
     service: ProductoService = Depends(get_producto_service),
 ):
     try:
@@ -77,7 +77,7 @@ def actualizar_producto(
 def actualizar_stock(
     datos: ProductoStockUpdate,
     id: int = Path(ge=1),
-    _: UserPublic = Depends(require_role(("admin",))),
+    _: UserPublic = Depends(require_role(["admin"])),
     service: ProductoService = Depends(get_producto_service),
 ):
     try:
@@ -89,7 +89,7 @@ def actualizar_stock(
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def eliminar_producto(
     id: int = Path(ge=1),
-    _: UserPublic = Depends(require_role(("admin",))),
+    _: UserPublic = Depends(require_role(["admin"])),
     service: ProductoService = Depends(get_producto_service),
 ):
     try:

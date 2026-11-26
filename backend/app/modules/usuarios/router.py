@@ -17,7 +17,7 @@ def get_usuario_service() -> UsuarioService:
 
 @router.get("", response_model=list[UserPublic], status_code=status.HTTP_200_OK)
 def listar_usuarios(
-    _: UserPublic = Depends(require_role(("admin",))),
+    _: UserPublic = Depends(require_role(["admin"])),
     service: UsuarioService = Depends(get_usuario_service),
 ):
     return service.listar_usuarios()
@@ -26,7 +26,7 @@ def listar_usuarios(
 @router.post("/{id}/activar", response_model=UserPublic, status_code=status.HTTP_200_OK)
 def activar_usuario(
     id: int = Path(ge=1),
-    _: UserPublic = Depends(require_role(("admin",))),
+    _: UserPublic = Depends(require_role(["admin"])),
     service: UsuarioService = Depends(get_usuario_service),
 ):
     try:
@@ -38,7 +38,7 @@ def activar_usuario(
 @router.post("/{id}/desactivar", response_model=UserPublic, status_code=status.HTTP_200_OK)
 def desactivar_usuario(
     id: int = Path(ge=1),
-    admin_actual: UserPublic = Depends(require_role(("admin",))),
+    admin_actual: UserPublic = Depends(require_role(["admin"])),
     service: UsuarioService = Depends(get_usuario_service),
 ):
     try:

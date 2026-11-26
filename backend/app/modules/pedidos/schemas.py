@@ -15,7 +15,7 @@ class PedidoCreate(SQLModel):
     items: list[ItemPedidoCreate] = Field(min_length=1)
     forma_pago: FormaPagoLiteral
     direccion_entrega: str = Field(min_length=5, max_length=200)
-    notas: str = Field(default="", max_length=500)
+    notas: str | None = Field(default=None, max_length=500)
 
 
 class DetallePedidoRead(SQLModel):

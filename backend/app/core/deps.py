@@ -48,7 +48,7 @@ def get_current_active_user(
     return current_user
 
 
-def require_role(allowed_roles: tuple[str, ...]) -> Callable[[UserPublic], UserPublic]:
+def require_role(allowed_roles: list[str]) -> Callable[[UserPublic], UserPublic]:
     def role_checker(
         current_user: UserPublic = Depends(get_current_active_user),
     ) -> UserPublic:

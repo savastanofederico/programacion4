@@ -67,7 +67,7 @@ class PedidoService:
                 estado="PENDIENTE",
                 forma_pago=datos.forma_pago,
                 direccion_entrega=datos.direccion_entrega.strip(),
-                notas=datos.notas.strip(),
+                notas=(datos.notas or "").strip(),
                 total=0.0,
             )
             uow.pedidos.add(pedido)

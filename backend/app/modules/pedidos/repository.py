@@ -13,7 +13,7 @@ class PedidoRepository(BaseRepository[Pedido]):
     def get_with_items(self, pedido_id: int) -> Pedido | None:
         statement = (
             select(Pedido)
-            .options(selectinload(Pedido.items))  
+            .options(selectinload(Pedido.items))
             .where(Pedido.id == pedido_id)
         )
         return self.session.exec(statement).first()
@@ -40,9 +40,9 @@ class PedidoRepository(BaseRepository[Pedido]):
 
         items_stmt = (
             select(Pedido)
-            .options(selectinload(Pedido.items))  
+            .options(selectinload(Pedido.items))
             .where(*filtros)
-            .order_by(Pedido.id.desc())  
+            .order_by(Pedido.id.desc())
             .offset(skip)
             .limit(limit)
         )
@@ -50,7 +50,7 @@ class PedidoRepository(BaseRepository[Pedido]):
         return total, items
 
     def count_by_estado(self) -> dict[str, int]:
-        stmt = select(Pedido.estado, func.count(Pedido.id)).group_by(Pedido.estado)  
+        stmt = select(Pedido.estado, func.count(Pedido.id)).group_by(Pedido.estado)
         rows = self.session.exec(stmt).all()
         conteo = {
             "PENDIENTE": 0,
@@ -63,9 +63,9 @@ class PedidoRepository(BaseRepository[Pedido]):
         return conteo
 
     def count_hoy(self) -> int:
-        inicio_hoy = datetime.now(timezone.utc).replace(
-            hour=0, minute=0, second=0, microsecond=0, tzinfo=None
-        )
+        # created_at se guarda en UTC; se toma la medianoche de la hora local del servidor
+        inicio_local = datetime.now().astimezone().replace(hour=0, minute=0, second=0, microsecond=0)
+        inicio_hoy = inicio_local.astimezone(timezone.utc).replace(tzinfo=None)
         stmt = (
             select(func.count())
             .select_from(Pedido)

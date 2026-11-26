@@ -35,7 +35,7 @@ def obtener_categoria(
 @router.post("", response_model=CategoriaRead, status_code=status.HTTP_201_CREATED)
 def crear_categoria(
     datos: CategoriaCreate,
-    _: UserPublic = Depends(require_role(("admin",))),
+    _: UserPublic = Depends(require_role(["admin"])),
     service: CategoriaService = Depends(get_categoria_service),
 ):
     try:
@@ -48,7 +48,7 @@ def crear_categoria(
 def actualizar_categoria(
     datos: CategoriaUpdate,
     id: int = Path(ge=1),
-    _: UserPublic = Depends(require_role(("admin",))),
+    _: UserPublic = Depends(require_role(["admin"])),
     service: CategoriaService = Depends(get_categoria_service),
 ):
     try:
@@ -62,7 +62,7 @@ def actualizar_categoria(
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def eliminar_categoria(
     id: int = Path(ge=1),
-    _: UserPublic = Depends(require_role(("admin",))),
+    _: UserPublic = Depends(require_role(["admin"])),
     service: CategoriaService = Depends(get_categoria_service),
 ):
     try:

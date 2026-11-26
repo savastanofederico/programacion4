@@ -17,13 +17,13 @@ def run_seed() -> None:
                 username="admin",
                 full_name="Administrador Food Store",
                 email="admin@foodstore.com",
-                hashed_password=hash_password("Food9899@"),
+                hashed_password=hash_password("Admin1234!"),
                 role="admin",
                 disabled=False,
             )
             session.add(admin)
             session.commit()
-            print("Usuario admin creado (admin / Food9899@)")
+            print("Usuario admin creado (admin / Admin1234!)")
         else:
             print("Usuario admin ya existía.")
 
